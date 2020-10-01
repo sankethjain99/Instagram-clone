@@ -30,3 +30,24 @@
     margin-right: 10px;
 }
 
+
+.post__commentbox{
+    display: flex;
+    margin-top: 10px;
+}
+
+.post__input{
+    flex: 1;
+    border: none;
+    padding: 10px;
+    border-top: 1px solid lightgray;
+}
+
+
+.post__button{
+    flex: 0;
+    border: none;
+    border-top: 1px solid lightgray;
+    color: #608283;
+    background-color: transparent;
+}

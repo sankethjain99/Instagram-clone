@@ -8,6 +8,13 @@ import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import { Input } from '@material-ui/core';
 import ImageUpload from './ImageUpload';
+import InstagramEmbed from 'react-instagram-embed';
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile
+} from "react-device-detect";
 
 
 function rand() {
@@ -51,7 +58,7 @@ function App() {
   useEffect(()=> {
     const unsubscribe =auth.onAuthStateChanged((authUser)=> {
       if(authUser){
-          console.log(authUser);
+          
           setUser(authUser);
 
           
@@ -97,11 +104,7 @@ const signIn=(event=>{
   return (
     <div className="app">
 
-      {user?.displayName ? (
-        <ImageUpload username={user.displayName}/>
-      ): (
-        <h2> Login To Upload</h2>
-      )};
+     
       
       <Modal
         open={open}
@@ -178,9 +181,8 @@ const signIn=(event=>{
         src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
         alt=""
         />
-      </div>
 
-      {user ? (
+{user ? (
          <Button onClick={() => auth.signOut()}>LogOut</Button>
       ):(
         <div className="app__loginContainer"> 
@@ -189,14 +191,44 @@ const signIn=(event=>{
       <Button onClick={() => setOpen(true)}>Sign Up</Button>
       </div>
       )}
-      
-      <h1>Sanketh jinda hai</h1>
+      </div>
 
-     {
+      <div className="app_posts">
+        <div className="app_postsleft">
+        {
        posts.map(({id , post})=>(
-         <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
+         <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
        ))
      }
+        </div>
+        <div className="app_postsright">
+        <BrowserView>
+        <InstagramEmbed
+          url='https://www.instagram.com/p/CEuHr-EsehV/?utm_source=ig_web_copy_link'
+          maxWidth={320}
+          hideCaption={false}
+          containerTagName='div'
+          protocol=''
+          injectScript
+          onLoading={() => {}}
+          onSuccess={() => {}}
+          onAfterRender={() => {}}
+          onFailure={() => {}}
+        />
+        </BrowserView>
+
+        </div>
+
+      </div>
+      
+      
+
+    
+      {user?.displayName ? (
+        <ImageUpload username={user.displayName}/>
+      ): (
+        <h2> Login To Upload</h2>
+      )};
       
       
     </div>
